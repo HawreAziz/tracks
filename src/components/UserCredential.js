@@ -4,7 +4,7 @@ import { Input, Button, Text } from 'react-native-elements';
 import Spacer from './Spacer';
 
 
-const UserCredential =  ({ handleLogin, state, screenTitle, buttonText}) => {
+const UserCredential =  ({ handleLogin, errorMessage, screenTitle, buttonText}) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -31,8 +31,8 @@ const UserCredential =  ({ handleLogin, state, screenTitle, buttonText}) => {
               value={password} />
             </Spacer>
             <Spacer>
-            { state.errorMessage ? <Text style={styles.errorStyle}>{state.errorMessage}</Text> : null }
-            <Button title='Sign Up' onPress={ () => handleLogin(email, password)} />
+            { errorMessage ? <Text style={styles.errorStyle}>{errorMessage}</Text> : null }
+            <Button title={buttonText} onPress={ () => handleLogin(email, password)} />
             </Spacer>
         </View>
     );

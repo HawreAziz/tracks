@@ -1,24 +1,36 @@
 import React, { useContext } from 'react';
-import { View, Button, StyleSheet } from 'react-native';
-import { Context } from '../context/TrackContext';
+import { View, StyleSheet } from 'react-native';
+import { Context } from '../context/AuthContext';
+import { NavigationEvents } from 'react-navigation';
 import UserCredential from '../components/UserCredential';
+import NavLink from "../components/NavLink";
 
 
 const LoginScreen = ({ navigation }) => {
-    const { state, signin } = useContext(Context);
+    const { state, signin, clearErrorMessage } = useContext(Context);
     return (
         <View style={styles.containterStyle}> 
-             <Button title='Go to signup screen' onPress={() => navigation.navigate('Signup')} />
+             <NavigationEvents onWillFocus={clearErrorMessage} />
              <UserCredential 
                  handleLogin={(email, password) => {signin({email, password})}}
-                 state={state}
+                 errorMessage={state.errorMessage}
                  headerTitle="SigninScreen"
-                 buttonText="sign in"
+                 buttonText="Sign in"
+             />
+             <NavLink 
+               goto='Signup'
+               text="Do not have an account? Go back to sign up."
              />
         </View>
     );
 }
 
+
+LoginScreen.navigationOptions = () => {
+    return {
+        headerShown: false 
+    };
+};
 
 const styles = StyleSheet.create({
     containterStyle: {

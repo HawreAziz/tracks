@@ -13,14 +13,19 @@ import SignupScreen from './src/screens/SignupScreen';
 import LoginScreen from './src/screens/LoginScreen';
 import TrackListScreen from './src/screens/TrackListScreen';
 import TrackDetailScreen from './src/screens/TrackDetailScreen';
-import { Provider } from './src/context/TrackContext';
+import ResolveAuthScreen from './src/screens/ResolveAuthScreen'
+import { Provider as AuthProvider } from './src/context/AuthContext';
+import { Provider as TrackProvider } from './src/context/TrackContext';
+import { Provider as LocationProvider } from './src/context/LocationContext';
+import { setNavigator } from "./navigationRef";
 
 
 
 const appNavigation = createSwitchNavigator({
+  ResolveAuthScreen: ResolveAuthScreen,
   loginFlow: createStackNavigator({
-    Login: LoginScreen,
-    Signup: SignupScreen
+    Signup: SignupScreen,
+    Login: LoginScreen
   }),
   mainFlow: createBottomTabNavigator({
     trackDescp: createStackNavigator({
@@ -36,7 +41,11 @@ const App =  createAppContainer(appNavigation);
 
 export default() => {
   return (
-    <Provider>
-      <App />
-    </Provider>
+    <TrackProvider>
+    <LocationProvider>
+    <AuthProvider>
+      <App ref={(navigator) => setNavigator(navigator)} />
+    </AuthProvider>
+    </LocationProvider>
+    </TrackProvider>
   )};
