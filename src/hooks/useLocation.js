@@ -14,14 +14,12 @@ export default ( shouldTrack, callback ) => {
                 if(!granted){
                     throw new Error('Permission to access location was denied.');
                 }
-                console.log('startWatchingPosition');
                 subscriber = await watchPositionAsync({
                     accuracy: Accuracy.BestForNavigation,
                     timeInterval: 1000,
                     distanceInterval: 10
                 }, location => {
-                    console.log(location);
-                    callback();
+                    callback(location);
                 });
             }catch(error){
                 setErrorMessage(error);

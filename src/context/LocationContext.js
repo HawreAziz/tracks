@@ -14,6 +14,8 @@ const handleTracks = (state, action) => {
           return { ...state, recording: false };
         case 'change_name':
           return { ...state, name: action.payload };
+        case 'reset':
+          return { name: '', locations: [] };
         default:
           return state;
     }
@@ -34,10 +36,17 @@ const stopRecording = dispatch => {
 }
 
 
-const changeName = () => {
+const changeName = dispatch => {
     return (name) => {
         dispatch({ type: 'change_name', payload: name });
     }
+}
+
+
+const reset = dispatch => {
+  return () => {
+    dispatch({type: 'reset'});
+  }
 }
 
 
@@ -54,7 +63,9 @@ export const {Context, Provider} = createDataContext(
                                                     handleTracks,
                                                     { stopRecording,
                                                       startRecording,
-                                                      addLocation
+                                                      addLocation,
+                                                      changeName,
+                                                      reset
                                                     },
                                                     { recording: false,
                                                       locations: [],

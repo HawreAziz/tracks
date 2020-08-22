@@ -11,7 +11,11 @@ const TrackForm = () => {
     const [saveTrack] = useSaveTrack();
     return (<>
               <Spacer>
-              <Input placeholder='Enter track name' onChangeText={changeName} value={name} />
+              <Input 
+                placeholder='Enter track name' 
+                onChangeText={changeName} 
+                value={name} 
+              />
               </Spacer>
               <Spacer>
               { recording 
